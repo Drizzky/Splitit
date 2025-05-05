@@ -85,7 +85,7 @@ const handleClick = () => {
 
   <FirstPersonForm v-if="currentStep === 1" @firstPersonNet="handleFirstPersonNet" />
   <SecondPersonForm v-else-if="currentStep === 2" @secondPersonNet="handleSecondPersonNet" />
-  <ExpensesForm v-else-if="currentStep == 3" @totalExpenses="handleTotalExpenses" />
+  <ExpensesForm v-else-if="currentStep === 3" @totalExpenses="handleTotalExpenses" />
 
   <div
     v-if="currentStep === 4"
@@ -104,28 +104,34 @@ const handleClick = () => {
       </template>
 
       <template #content>
-        <div class="p-2 mb-6">
-          <p class="m-0 flex items-center justify-between text-lg font-medium">
-            <span>First person's share:</span>
-            <span class="text-lg">{{ financeSplitter.firstPercentage.toFixed(2) }}%</span>
-            <i class="pi pi-arrow-right mx-3"></i>
-            <span class="font-semibold text-lg text-primary"
-              >{{ financeSplitter.firstOwes.toFixed(2) }} €</span
-            >
-          </p>
+        <div class="p-2 mb-4">
+          <div class="flex items-center justify-between text-lg font-medium">
+            <span class="w-2/3 truncate">
+              First person's share:
+              <span class="font-semibold text-primary">
+                {{ financeSplitter.firstPercentage.toFixed(2) }}%
+              </span>
+            </span>
+            <i class="pi pi-arrow-right pr-4 pl-2 text-sm"></i>
+            <span class="w-1/3 text-right font-semibold text-primary">
+              {{ financeSplitter.firstOwes.toFixed(2) }}€
+            </span>
+          </div>
         </div>
 
-        <div class="p-2 mb-6">
-          <p class="m-0 flex items-center justify-between text-lg font-medium">
-            <span>Second person's share:</span>
-            <span class="font-semibold text-lg"
-              >{{ financeSplitter.secondPercentage.toFixed(2) }}%</span
-            >
-            <i class="pi pi-arrow-right mx-3"></i>
-            <span class="font-semibold text-l text-primary"
-              >{{ financeSplitter.secondOwes.toFixed(2) }} €</span
-            >
-          </p>
+        <div class="p-2 mb-4">
+          <div class="flex items-center justify-between text-lg font-medium">
+            <span class="w-2/3 truncate">
+              Second person's share:
+              <span class="font-semibold text-primary">
+                {{ financeSplitter.secondPercentage.toFixed(2) }}%
+              </span>
+            </span>
+            <i class="pi pi-arrow-right mx-2 pr-3 text-sm"></i>
+            <span class="w-1/3 text-right font-semibold text-primary">
+              {{ financeSplitter.secondOwes.toFixed(2) }}€
+            </span>
+          </div>
         </div>
       </template>
 
@@ -141,5 +147,3 @@ const handleClick = () => {
     </Card>
   </div>
 </template>
-
-<style scoped></style>
