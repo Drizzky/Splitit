@@ -2,10 +2,13 @@
 import FirstPersonForm from './components/FirstPersonForm.vue'
 import SecondPersonForm from './components/SecondPersonForm.vue'
 import ExpensesForm from './components/ExpensesForm.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
+import { useToast } from 'primevue/usetoast'
+import Toast from 'primevue/toast'
 
+const toast = useToast()
 const currentStep = ref(1)
 const firstPersonNet = ref(null)
 const secondPersonNet = ref(null)
@@ -43,15 +46,42 @@ const financeSplitter = computed(() => {
   }
 })
 
-const handleStartOver = () => {
+watch(currentStep, (newStep) => {
+  if (newStep === 4) {
+    const result = financeSplitter.value
+
+    const values = [
+      result.firstPercentage,
+      result.secondPercentage,
+      result.firstOwes,
+      result.secondOwes,
+    ]
+
+    const hasNaN = values.some((val) => isNaN(val))
+
+    if (hasNaN) {
+      toast.add({
+        severity: 'error',
+        summary: 'Invalid Calculation',
+        detail: 'Please enter valid numbers for both incomes and expenses.',
+        life: 3000,
+      })
+
+      currentStep.value = 1
+    }
+  }
+})
+
+const handleClick = () => {
   currentStep.value = 1
 }
 </script>
 
 <template>
-  <heaader>
-    <h1 class="text-center">Split it!</h1>
-  </heaader>
+  <Toast />
+  <header>
+    <h1 class="anton text-6xl text-center tracking-wide text-primary">SPLIT IT!</h1>
+  </header>
 
   <FirstPersonForm v-if="currentStep === 1" @firstPersonNet="handleFirstPersonNet" />
   <SecondPersonForm v-else-if="currentStep === 2" @secondPersonNet="handleSecondPersonNet" />
@@ -69,7 +99,7 @@ const handleStartOver = () => {
       <template #subtitle>
         <div class="flex justify-content-center text-lg">
           <span class="font-medium">Total expenses:</span>
-          <span class="font-semibold text-xl">{{ totalExpenses }} €</span>
+          <span class="font-semibold text-lg text-primary pl-2">{{ totalExpenses }} €</span>
         </div>
       </template>
 
@@ -79,7 +109,9 @@ const handleStartOver = () => {
             <span>First person's share:</span>
             <span class="text-lg">{{ financeSplitter.firstPercentage.toFixed(2) }}%</span>
             <i class="pi pi-arrow-right mx-3"></i>
-            <span class="font-semibold text-lg">{{ financeSplitter.firstOwes.toFixed(2) }} €</span>
+            <span class="font-semibold text-lg text-primary"
+              >{{ financeSplitter.firstOwes.toFixed(2) }} €</span
+            >
           </p>
         </div>
 
@@ -90,16 +122,18 @@ const handleStartOver = () => {
               >{{ financeSplitter.secondPercentage.toFixed(2) }}%</span
             >
             <i class="pi pi-arrow-right mx-3"></i>
-            <span class="font-semibold text-l">{{ financeSplitter.secondOwes.toFixed(2) }} €</span>
+            <span class="font-semibold text-l text-primary"
+              >{{ financeSplitter.secondOwes.toFixed(2) }} €</span
+            >
           </p>
         </div>
       </template>
 
       <template #footer>
-        <div class="flex justify-center">
+        <div class="flex justify-content-center">
           <Button
             label="Start over"
-            @click="handleStartOver"
+            @click="handleClick"
             class="p-button-outlined text-lg px-4 py-2"
           />
         </div>

@@ -25,7 +25,6 @@ const handleClick = () => {
 
       <div class="grid formgrid gap-3">
         <div class="field col-12">
-          <label for="paycheck" class="font-bold mb-2 block">First Person's Paycheck</label>
           <InputNumber
             v-model="paycheck"
             inputId="paycheck"
@@ -33,12 +32,12 @@ const handleClick = () => {
             currency="EUR"
             locale="de-DE"
             class="w-full"
+            placeholder="First Person's Paycheck"
             required
           />
         </div>
 
         <div class="field col-12">
-          <label for="debt" class="font-bold mb-2 block">First Person's Total Debt</label>
           <InputNumber
             v-model="debt"
             inputId="debt"
@@ -46,6 +45,8 @@ const handleClick = () => {
             currency="EUR"
             locale="de-DE"
             class="w-full"
+            placeholder="First Person's Total Debt"
+            required
           />
         </div>
       </div>
