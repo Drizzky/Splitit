@@ -17,22 +17,42 @@ const handleClick = () => {
 </script>
 
 <template>
-  <h2>Second Person's Paycheck</h2>
-  <InputNumber
-    v-model="paycheck"
-    inputId="currency-germany"
-    mode="currency"
-    currency="EUR"
-    locale="de-DE"
-    required
-  />
-  <h2>Second Person's total debt</h2>
-  <InputNumber
-    v-model="debt"
-    inputId="currency-germany"
-    mode="currency"
-    currency="EUR"
-    locale="de-DE"
-  />
-  <Button label="Next" @click="handleClick" />
+  <div class="fadein animation-duration-1000 flex justify-content-center p-4">
+    <div class="surface-card border-round shadow-3 p-5 w-full md:w-8 lg:w-6">
+      <div class="text-center mb-4">
+        <h2 class="m-0">Second Person's Details</h2>
+      </div>
+
+      <div class="grid formgrid gap-3">
+        <div class="field col-12">
+          <label for="second-paycheck" class="font-bold mb-2 block">Second Person's Paycheck</label>
+          <InputNumber
+            v-model="paycheck"
+            inputId="second-paycheck"
+            mode="currency"
+            currency="EUR"
+            locale="de-DE"
+            class="w-full"
+            required
+          />
+        </div>
+
+        <div class="field col-12">
+          <label for="second-debt" class="font-bold mb-2 block">Second Person's Total Debt</label>
+          <InputNumber
+            v-model="debt"
+            inputId="second-debt"
+            mode="currency"
+            currency="EUR"
+            locale="de-DE"
+            class="w-full"
+          />
+        </div>
+      </div>
+
+      <div class="flex justify-content-center mt-4">
+        <Button label="Next" @click="handleClick" />
+      </div>
+    </div>
+  </div>
 </template>

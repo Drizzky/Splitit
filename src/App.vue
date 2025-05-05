@@ -50,33 +50,58 @@ const handleStartOver = () => {
 
 <template>
   <heaader>
-    <h1>Split it!</h1>
+    <h1 class="text-center">Split it!</h1>
   </heaader>
 
   <FirstPersonForm v-if="currentStep === 1" @firstPersonNet="handleFirstPersonNet" />
   <SecondPersonForm v-else-if="currentStep === 2" @secondPersonNet="handleSecondPersonNet" />
   <ExpensesForm v-else-if="currentStep == 3" @totalExpenses="handleTotalExpenses" />
 
-  <div v-if="currentStep === 4">
-    <Card style="width: 25rem; overflow: hidden">
-      <template #header> </template>
-      <template #title>Results</template>
-      <template #subtitle>Total expenses: {{ totalExpenses }} €</template>
-      <template #content>
-        <p class="m-0">
-          First person's share: {{ financeSplitter.firstPercentage.toFixed(2) }}%
-          <i class="pi pi-arrow-right"></i>
-          {{ financeSplitter.firstOwes.toFixed(2) }} €
-        </p>
-        <p class="m-0">
-          Second person's share: {{ financeSplitter.secondPercentage.toFixed(2) }}%
-          <i class="pi pi-arrow-right"></i>
-          {{ financeSplitter.secondOwes.toFixed(2) }} €
-        </p>
+  <div
+    v-if="currentStep === 4"
+    class="fadein animation-duration-1000 flex justify-content-center p-4"
+  >
+    <Card style="width: 25rem; overflow: hidden" class="shadow-2 p-4">
+      <template #title>
+        <h2 class="text-center text-2xl font-semibold mb-4">Results</h2>
       </template>
+
+      <template #subtitle>
+        <div class="flex justify-content-center text-lg">
+          <span class="font-medium">Total expenses:</span>
+          <span class="font-semibold text-xl">{{ totalExpenses }} €</span>
+        </div>
+      </template>
+
+      <template #content>
+        <div class="p-2 mb-6">
+          <p class="m-0 flex items-center justify-between text-lg font-medium">
+            <span>First person's share:</span>
+            <span class="text-lg">{{ financeSplitter.firstPercentage.toFixed(2) }}%</span>
+            <i class="pi pi-arrow-right mx-3"></i>
+            <span class="font-semibold text-lg">{{ financeSplitter.firstOwes.toFixed(2) }} €</span>
+          </p>
+        </div>
+
+        <div class="p-2 mb-6">
+          <p class="m-0 flex items-center justify-between text-lg font-medium">
+            <span>Second person's share:</span>
+            <span class="font-semibold text-lg"
+              >{{ financeSplitter.secondPercentage.toFixed(2) }}%</span
+            >
+            <i class="pi pi-arrow-right mx-3"></i>
+            <span class="font-semibold text-l">{{ financeSplitter.secondOwes.toFixed(2) }} €</span>
+          </p>
+        </div>
+      </template>
+
       <template #footer>
-        <div class="flex gap-4 mt-1">
-          <Button label="Start over" @click="handleStartOver" />
+        <div class="flex justify-center">
+          <Button
+            label="Start over"
+            @click="handleStartOver"
+            class="p-button-outlined text-lg px-4 py-2"
+          />
         </div>
       </template>
     </Card>
